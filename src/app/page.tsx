@@ -1,9 +1,12 @@
+import HomeHeader from '@/components/home/header'
+import { HeroSection } from '@/components/home/hero'
 import Image from 'next/image'
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div>Main page</div>
+    <main className="flex flex-col min-h-screen">
+        <HomeHeader />
+        <HeroSection />
     </main>
   )
 }
