@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Link from "next/link"
 import { FaGithub, FaGoogle } from "react-icons/fa"
 
 const AuthenticationForm = () => {
@@ -53,7 +54,8 @@ const AuthenticationForm = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Create account</Button>
+        {/* <Button className="w-full">Create account</Button> */}
+        <Link href="/auth/login"></Link>
       </CardFooter>
     </Card>
   );

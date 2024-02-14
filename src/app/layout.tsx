@@ -1,12 +1,13 @@
 import "@/styles/global.css";
 import { Metadata } from 'next';
 import * as React from 'react';
-import { Inter as FontSans } from "next/font/google"
+import { Unbounded as FontSans } from "next/font/google"
 import { siteConfig } from '@/constant/config';
 import { cn } from '@/lib/utils';
 
 //  Look at @/constant/config to change them
 export const metadata: Metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.title}`,
@@ -36,12 +37,12 @@ export const metadata: Metadata = {
     images: [`${siteConfig.url}/images/og.jpg`],
     // creator: '@th_clarence',
   },
-  // authors: [
-  //   {
-  //     name: 'Theodorus Clarence',
-  //     url: 'https://theodorusclarence.com',
-  //   },
-  // ],
+  authors: [
+    {
+      name: 'Thomas Porier',
+      url: 'https://thomasprorier.fr',
+    },
+  ],
 };
 
 export const fontSans = FontSans({
