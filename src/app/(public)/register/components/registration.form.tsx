@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useState } from "react"
+import { FormEvent, FormEventHandler, useState } from "react"
 
 const RegistrationForm = () => {
 
@@ -22,17 +22,48 @@ const RegistrationForm = () => {
   const [lastname, setLastname] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = () => {}
+  const handleSubmit = async (e: any) => {
+    e.preventDefault
+    if (!email || !password || !firstname || !lastname) {
+      setError('All fields are required')
+      return
+    }
+    try{
+      const res = await fetch('/api/authentification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password, firstname, lastname })
+      })
+      if(res.ok) {
+        const form = e.target
+        form.reset()
+      } else {
+        setError('An error occured when registering the user.')
+      }
+    } catch (error) {
+      setError(`An error occured when registering the user. ${error}`)
+    }
+  }
+
 
   return (
-    <form>
-    <Card>
-      <CardHeader className="space-y-1">
+    <form onSubmit={handleSubmit}>
+    <Card className={`${error ? 'border-red-500' : ''}`}>
+      <CardHeader className="space-y-2">
         <CardTitle className="text-2xl">Create an account</CardTitle>
         <CardDescription>
-          Already have an account? <Link href="/auth/login">Sign in</Link>
-          Enter your email below to create your account
+          Already have an account? <Link href="/auth/login" className="underline underline-offset-4 hover:text-primary">Sign in</Link>
         </CardDescription>
+        {
+          error && (
+            <div className="w-full bg-red-50 rounded border border-red-500 p-2">
+              <p className="text-red-500 text-xs font-light">{error}</p>
+            </div>
+
+          )
+        }
 
       </CardHeader>
       <CardContent className="grid gap-4">
@@ -56,8 +87,7 @@ const RegistrationForm = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button type="submit" className="w-full" onClick={handleSubmit}>Create account</Button>
-        <Link href="/auth/login"></Link>
+        <Button type="submit" className="w-full">Create account</Button>
       </CardFooter>
     </Card>
     </form>
