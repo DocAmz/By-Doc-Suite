@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
+import DashboardStore from "../../store/DashboardStore"
 
 export const DashboardNavbar = () => {
 
@@ -13,10 +14,10 @@ export const DashboardNavbar = () => {
           <Input id="search" type="text" placeholder="Search" className="rounded-xl border-none shadow-none bg-white w-full" />
         </div>
         <div className="">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+          <Avatar className="cursor-pointer" onClick={() => DashboardStore.setDisplayProfile()}>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </div>
       </div>
   </header>

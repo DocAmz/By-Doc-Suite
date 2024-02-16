@@ -11,10 +11,17 @@ const HomeHeader = () => {
         <div>
           <Image src={Logo.src} alt="Logo" width={150} height={80}/>
         </div>
+        <div className="flex gap-2">
         <Link className={cn(
           buttonVariants({ variant: "default" }),
           "rounded"
-        )} href={"/auth"} >Sign in</Link>
+        )} href={"/register"} >Sign in</Link>
+        <Link className={cn(
+          buttonVariants({ variant: "destructive" }),
+          "rounded"
+        )} href={"/auth"} >Log in</Link>
+        </div>
+
       </div>
     </header>
   )

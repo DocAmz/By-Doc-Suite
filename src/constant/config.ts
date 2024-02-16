@@ -1,7 +1,7 @@
 export const siteConfig = {
-	title: "Next.js + Tailwind CSS + TypeScript Starter",
+	title: "By Doc Standalone Online Full Suite",
 	description:
-		"A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky",
+		"Standalone Online Full Suite Document Management System",
 	/** Without additional '/' on the end, e.g. https://theodorusclarence.com */
 	url: "http://localhost:3000",
 };
