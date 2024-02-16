@@ -1,3 +1,6 @@
-[submodule "ByDraw"]
-	path = draw
-	url = https://github.com/DocAmz/ByType
+[submodule "ByType"]
+  path = ByType
+  url = https://github.com/DocAmz/ByType
+[submodule "Submodules/ByType"]
+	path = Submodules/ByType
+	url = https://github.com/DocAmz/ByType.git
