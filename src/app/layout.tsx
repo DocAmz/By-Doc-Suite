@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Unbounded as FontSans } from "next/font/google"
 import { siteConfig } from '@/constant/config';
 import { cn } from '@/lib/utils';
+import AuthProvider from "@/modules/AuthManager/Providers/AuthProvider";
 
 //  Look at @/constant/config to change them
 export const metadata: Metadata = {
@@ -60,7 +61,11 @@ export default function RootLayout({
       <body className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
-        )}>{children}</body>
+        )}>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+          </body>
     </html>
   )
 }

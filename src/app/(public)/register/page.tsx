@@ -1,15 +1,11 @@
-import { Metadata } from "next"
+'use client'
+
 import Image from "next/image"
 import Link from "next/link"
-
+import Logo from "@/assets/logo/logo.png"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import RegistrationForm from "@/app/(public)/register/components/registration.form"
-
-export const metadata: Metadata = {
-  title: "Registration",
-  description: "Registration forms built using the components.",
-}
 
 
 const RegistrationPage = () => {
@@ -29,7 +25,7 @@ const RegistrationPage = () => {
         <div className="absolute inset-0 bg-foreground" />
         <div className="relative z-20 flex items-center text-lg font-medium">
 
-          <Image src={require('@/assets/logo/logo.png')} alt="Logo" width={300} height={160}/>
+          <Image src={Logo.src} alt="Logo" width={300} height={160}/>
         </div>
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">

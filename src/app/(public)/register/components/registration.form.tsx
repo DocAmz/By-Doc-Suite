@@ -12,7 +12,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { FormEvent, FormEventHandler, useState } from "react"
+import { useState } from "react"
+import { useRouter } from 'next/navigation'
+// TODO import {isValidEmail} from '@/lib/utils'
 
 const RegistrationForm = () => {
 
@@ -21,31 +23,52 @@ const RegistrationForm = () => {
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [error, setError] = useState('')
+  const router = useRouter()
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault
+    e.preventDefault();
+
     if (!email || !password || !firstname || !lastname) {
-      setError('All fields are required')
-      return
+      setError('All fields are required');
+      return;
     }
-    try{
+    try {
+      const resUserExist = await fetch('/api/userExist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const { user } = await resUserExist.json();
+
+      console.log('user', user);
+
+      if (user) {
+        setError('User already exists');
+        return;
+      }
+
       const res = await fetch('/api/authentification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password, firstname, lastname })
-      })
-      if(res.ok) {
-        const form = e.target
-        form.reset()
+      });
+
+      if (res.ok) {
+        const form = e.target;
+        form.reset();
+        router.push('/auth');
       } else {
-        setError('An error occured when registering the user.')
+        setError('An error occurred when registering the user.');
       }
     } catch (error) {
-      setError(`An error occured when registering the user. ${error}`)
+      setError(`An error occurred when registering the user. ${error}`);
     }
-  }
+  };
 
 
   return (
@@ -58,7 +81,7 @@ const RegistrationForm = () => {
         </CardDescription>
         {
           error && (
-            <div className="w-full bg-red-50 rounded border border-red-500 p-2">
+            <div className="w-full bg-red-50 rounded border border-red-500 p-2 text-center">
               <p className="text-red-500 text-xs font-light">{error}</p>
             </div>
 
