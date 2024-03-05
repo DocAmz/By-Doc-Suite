@@ -50,7 +50,7 @@ const RegistrationForm = () => {
         return;
       }
 
-      const res = await fetch('/api/authentification', {
+      const res = await fetch('/api/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

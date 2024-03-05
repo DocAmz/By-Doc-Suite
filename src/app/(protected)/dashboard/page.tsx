@@ -11,14 +11,19 @@ import MainSection from "@/modules/DashboardManager/ui/main"
 import DashboardStore from "@/modules/DashboardManager/store/DashboardStore"
 import { observer } from "mobx-react"
 import { Button } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const  DashboardPage = observer(() => {
+ const router = useRouter()
+ const { data: session } = useSession()
 
-  const user = {
-    firstname: 'Shad',
-    lastname: 'Doel',
-    email: 'shad.doel@bydoc.fr'
-  }
+ console.log('session', session)
+
+ if (!session) {
+  router.push('/auth')
+  return null // Prevent rendering the rest of the component before redirection
+}
 
   return (
     <div className="w-full h-full">
@@ -28,9 +33,8 @@ const  DashboardPage = observer(() => {
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-4 rounded-lg">
               <h1>Profile</h1>
-              <p>{user.firstname}</p>
-              <p>{user.lastname}</p>
-              <p>{user.email}</p>
+              <p>{session?.user?.name}</p>
+              <p>{session?.user?.email}</p>
               <Button onClick={() => DashboardStore.setDisplayProfile()}>Close</Button>
             </div>
           </div>
