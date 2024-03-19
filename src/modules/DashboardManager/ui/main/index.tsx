@@ -13,7 +13,7 @@ import { observer } from "mobx-react"
 const MainSection = observer(() => {
   const [fileName, setFileName] = useState("New Document");
   const [docType, setDocType] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState("text editor state");
   const [editorState, setEditorState] = useState("");
   const user = DashboardStore.getUser()
 
@@ -30,8 +30,10 @@ const MainSection = observer(() => {
       setError("This document type doesn't exist");
       return;
     }
+    console.log("Creating new document:", fileName, docType, user);
 
     if(!user) return
+
 
     try {
       const res = await fetch("/api/createTypeDoc", {
@@ -39,13 +41,28 @@ const MainSection = observer(() => {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ filename: fileName, userId: user.id  , editorState }),
+        body: JSON.stringify({ filename: fileName, userId: user.id, editorState: editorState }),
       });
 
       if (res.ok) {
         const responseData = await res.json();
-        console.log("Document created successfully:", responseData);
-        // Handle success scenario
+
+        if (responseData.createdId) {
+
+          const payload = {
+            fileId: responseData.createdId,
+            userId: user.id
+          };
+          const encodedPayload = Buffer.from(JSON.stringify(payload)).toString("base64");
+
+          // Redirect to the specified URI (process.env.NEXT_PUBLIC_BYTYPE_URI)
+          const redirectUrl = `${process.env.NEXT_PUBLIC_BYTPE_URI}/access?payload=${encodedPayload}`;
+
+          window.location.href = redirectUrl;
+        } else {
+          console.error("No createdId found in the response data");
+          setError("An error occurred when creating the document");
+        }
       } else {
         const errorData = await res.json();
         console.error("Server error:", errorData);

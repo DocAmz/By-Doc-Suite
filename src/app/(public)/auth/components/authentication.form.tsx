@@ -49,8 +49,6 @@ const AuthenticationForm = () => {
 
   }
 
-
-
   return (
     <form onSubmit={handleSubmit}>
       <Card>

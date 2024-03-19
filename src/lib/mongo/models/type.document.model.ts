@@ -5,13 +5,13 @@ const typeDocSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  userID: {
+  userId: {
     type: String,
     required: true
   },
   editorState: {
     type: String,
-    required: true
+    required: false
   }
 }, { timestamps: true });
 

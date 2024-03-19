@@ -17,11 +17,11 @@ export async function POST(req: NextRequest) {
     await connectMongoDB();
     console.log("Connected - Creating the document");
 
-    const newDoc = await TypeDoc.create({ filename, userId, editorState: "" });
+    const newDoc = await TypeDoc.create({ filename: filename, userId: userId, editorState: editorState });
     console.log("Created document:", newDoc);
 
     console.log("Created - Building response");
-    return NextResponse.json({ message: "File created" }, { status: 201 });
+    return NextResponse.json({ message: "File created", createdId: newDoc._id }, { status: 201 });
   } catch (error) {
     console.error("Error creating TypeDoc:", error);
     return NextResponse.json({ message: "An error occurred when creating the document." }, { status: 500 });
